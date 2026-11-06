@@ -1,0 +1,51 @@
+2026-11-05 22:42:57,542 - INFO - Ran with args: (1, 2), and kwargs: {}
+2026-11-06 01:58:25,825 - INFO - 工具: add, 开始执行...
+2026-11-06 01:58:25,826 - INFO - 工具：add,执行成功,结果3
+2026-11-06 02:00:39,563 - INFO - 工具: add, 开始执行...
+2026-11-06 02:00:39,563 - INFO - 工具：add,执行成功,结果3
+2026-11-06 02:00:56,911 - INFO - 工具: add, 开始执行...
+2026-11-06 02:00:56,911 - INFO - 工具：add,执行成功,结果3
+2026-11-06 02:00:56,911 - INFO - 工具: search, 开始执行...
+2026-11-06 02:00:56,911 - INFO - 工具：search,执行成功,结果{'status': 'success', 'data': '搜索：Python装饰器'}
+2026-11-06 02:00:56,911 - INFO - 工具: add, 开始执行...
+2026-11-06 02:00:56,911 - INFO - 工具：add,执行成功,结果{'status': 'success', 'data': 3}
+2026-11-06 02:03:07,507 - INFO - 工具: search, 开始执行...
+2026-11-06 02:03:07,507 - INFO - 工具：search,执行成功,结果{'status': 'success', 'data': '搜索：Python装饰器'}
+2026-11-06 02:03:07,507 - INFO - 工具: add, 开始执行...
+2026-11-06 02:03:07,507 - INFO - 工具：add,执行成功,结果{'status': 'success', 'data': 3}
+2026-11-06 02:45:23,262 - INFO - 工具: search, 开始执行...
+2026-11-06 02:45:23,262 - INFO - search 耗时 0.000001秒
+2026-11-06 02:45:23,262 - INFO - 工具：search,执行成功,结果{'status': 'success', 'data': '搜索：Python装饰器'}
+2026-11-06 02:45:23,262 - INFO - 工具: add, 开始执行...
+2026-11-06 02:45:23,262 - INFO - add 耗时 0.000001秒
+2026-11-06 02:45:23,262 - INFO - 工具：add,执行成功,结果{'status': 'success', 'data': 3}
+2026-11-06 02:45:23,262 - INFO - 工具: add, 开始执行...
+2026-11-06 02:45:23,262 - INFO - add 耗时 0.000002秒
+2026-11-06 02:45:23,262 - ERROR - 工具 [add] 执行失败
+Traceback (most recent call last):
+  File "F:\python_workspace\work\9-18\dectorater.py", line 19, in wrapper
+    result = orig_func(*args, **kwargs)
+  File "F:\python_workspace\work\9-18\dectorater.py", line 35, in wrapper
+    return orig_func(*args, **kwargs)
+  File "F:\python_workspace\work\9-18\demo_function_call.py", line 17, in add
+    return {"status": "success", "data": a + b}
+                                         ~~^~~
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
+2026-11-06 03:23:03,818 - INFO - 工具: search, 开始执行...
+2026-11-06 03:23:03,818 - INFO - search 耗时 0.000001秒
+2026-11-06 03:23:03,818 - INFO - 工具：search,执行成功,结果{'status': 'success', 'data': '搜索：Python装饰器'}
+2026-11-06 03:23:03,818 - INFO - 工具: add, 开始执行...
+2026-11-06 03:23:03,818 - INFO - add 耗时 0.000001秒
+2026-11-06 03:23:03,818 - INFO - 工具：add,执行成功,结果{'status': 'success', 'data': 3}
+2026-11-06 03:23:03,818 - INFO - 工具: add, 开始执行...
+2026-11-06 03:23:03,818 - INFO - add 耗时 0.000002秒
+2026-11-06 03:23:03,818 - ERROR - 工具 [add] 执行失败
+Traceback (most recent call last):
+  File "F:\python_workspace\work\9-18\dectorater.py", line 19, in wrapper
+    result = orig_func(*args, **kwargs)
+  File "F:\python_workspace\work\9-18\dectorater.py", line 35, in wrapper
+    return orig_func(*args, **kwargs)
+  File "F:\python_workspace\work\9-18\demo_function_call.py", line 17, in add
+    return {"status": "success", "data": a + b}
+                                         ~~^~~
+TypeError: unsupported operand type(s) for +: 'int' and 'str'
