@@ -1,5 +1,5 @@
 import json
-from demo_function_call import function_call
+from demo_no_async.demo_function_call import function_call
 
 def handle_request(request_json):
     try:

@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/9-19.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.ignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/List comprehension.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Python装饰器.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Vector.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/class method and static class method.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo_asyncio.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo_dectorater.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo_function_call.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/demo_json.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dict count.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/list.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swap two numbers.py" afterDir="false" />
+    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常">
+      <change afterPath="$PROJECT_DIR$/async_demo/demo_asyncio.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/async_demo/demo_dectorater_async.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/async_demo/demo_json_async.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/9-19.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/9-19.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/List comprehension.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/List comprehension.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Python装饰器.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/Python装饰器.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Vector.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/Vector.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/class method and static class method.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/class method and static class method.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_asyncio.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_dectorater.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_dectorater.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_function_call.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_function_call.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/demo_json.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_json.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dict count.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/dict count.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/list.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/list.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/swap two numbers.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/swap two numbers.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,7 +61,9 @@
     "Python.dectorater.executor": "Run",
     "Python.demo_asyncio.executor": "Run",
     "Python.demo_function_call.executor": "Run",
+    "Python.demo_function_call_async.executor": "Run",
     "Python.demo_json.executor": "Run",
+    "Python.demo_json_async.executor": "Run",
     "Python.dict count.executor": "Run",
     "Python.list.executor": "Run",
     "Python.swap two numbers.executor": "Run",
@@ -71,7 +73,8 @@
     "RunOnceActivity.typescript.service.memoryLimit.init": "true",
     "codeWithMe.voiceChat.enabledByDefault": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "F:/python_workspace/work/9-18",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "F:/python_workspace/work/every-day/async_demo",
     "node.js.detected.package.stylelint": "true",
     "node.js.selected.package.stylelint": "",
     "nodejs_package_manager_path": "npm",
@@ -80,7 +83,12 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\python_workspace\work\every-day\async_demo" />
       <recent name="F:\python_workspace\work\9-18" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="F:\python_workspace\work\every-day\async_" />
+      <recent name="F:\python_workspace\work\every-day\demo" />
     </key>
   </component>
   <component name="RunManager">
@@ -99,7 +107,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="F:\python_workspace\work\9-18\demo_dectorater.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/../9-18/demo_dectorater.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -123,7 +131,7 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <option name="DEBUG_JUST_MY_CODE" value="false" />
       <option name="RUN_TOOL" value="" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/demo_function_call.py" />
+      <option name="SCRIPT_NAME" value="F:\python_workspace\work\every-day\demo\demo_function_call.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -132,8 +140,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="demo_function_call_async" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="9-19" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/async_demo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="DEBUG_JUST_MY_CODE" value="false" />
+      <option name="RUN_TOOL" value="" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/async_demo/demo_function_call_async.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Python.demo_function_call_async" />
+      <item itemvalue="Python.demo_dectorater" />
+      <item itemvalue="Python.demo_function_call" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.demo_function_call_async" />
         <item itemvalue="Python.demo_function_call" />
         <item itemvalue="Python.demo_dectorater" />
       </list>
@@ -154,6 +192,23 @@
       <option name="presentableId" value="Default" />
       <updated>1789786301425</updated>
     </task>
+    <task id="LOCAL-00001" summary="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常">
+      <option name="closed" value="true" />
+      <created>1793977009596</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1793977009596</updated>
+    </task>
+    <task id="LOCAL-00002" summary="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常">
+      <option name="closed" value="true" />
+      <created>1793977046650</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1793977046650</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -184,5 +239,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常" />
+    <option name="LAST_COMMIT_MESSAGE" value="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常" />
   </component>
 </project>

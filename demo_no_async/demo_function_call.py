@@ -1,4 +1,4 @@
-from demo_dectorater import *
+from demo_no_async.demo_dectorater import *
 #工具调用模拟器：函数，一个列表，列表里面是函数名和需要的参数
 #工具注册表，保存函数
 @my_logger
