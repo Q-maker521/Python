@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常">
-      <change afterPath="$PROJECT_DIR$/async_demo/demo_asyncio.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/async_demo/demo_dectorater_async.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/async_demo/demo_json_async.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/9-19.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/9-19.iml" afterDir="false" />
+    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/List comprehension.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/List comprehension.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Python装饰器.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/Python装饰器.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Vector.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/Vector.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/class method and static class method.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/class method and static class method.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_asyncio.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_dectorater.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_dectorater.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_function_call.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_function_call.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/demo_json.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/demo_json.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dict count.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/dict count.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/list.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/list.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swap two numbers.py" beforeDir="false" afterPath="$PROJECT_DIR$/demo_no_async/swap two numbers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" beforeDir="false" afterPath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -208,7 +192,15 @@
       <option name="project" value="LOCAL" />
       <updated>1793977046650</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发">
+      <option name="closed" value="true" />
+      <created>1794045620339</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1794045620339</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -242,6 +234,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常" />
-    <option name="LAST_COMMIT_MESSAGE" value="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常" />
+    <MESSAGE value="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发" />
+    <option name="LAST_COMMIT_MESSAGE" value="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发" />
   </component>
 </project>

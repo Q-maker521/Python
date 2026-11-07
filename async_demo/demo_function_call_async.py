@@ -4,17 +4,19 @@ from async_demo.demo_dectorater_async import *
 #工具调用模拟器：函数，一个列表，列表里面是函数名和需要的参数
 #工具注册表，保存函数
 
-
+# 创建信号量，限制最大并发数为 2
+semaphore = asyncio.Semaphore(2)
 
 @my_logger
 @my_timer
 async def search(message):
-    if message == "失败测试":
-        raise ValueError("模拟搜索失败")
+    async with semaphore:
+        if message == "失败测试":
+            raise ValueError("模拟搜索失败")
 
-    delay = 5 if message == "慢请求" else 1
-    await asyncio.sleep(delay)
-    return {"status": "success", "data": f"搜索：{message}"}
+        delay = 5 if message == "慢请求" else 1
+        await asyncio.sleep(delay)
+        return {"status": "success", "data": f"搜索：{message}"}
 
 @my_logger
 @my_timer
@@ -41,30 +43,42 @@ async def function_call(name,keywords=None):
     except TypeError as e:
         return  f"error parameters:{e}"
 
+# async def main():
+#     start = time.perf_counter()
+#
+#     #定义带超时控制的包装函数
+#     async def search_with_timeout(msg):
+#         try :
+#             # 设置2秒超时
+#             return await asyncio.wait_for(search(msg), timeout=2)
+#         except asyncio.TimeoutError:
+#             return {
+#         "status": "timeout",
+#         "message": f"请求 {msg} 超过 2 秒",
+#     }
+#
+#     result = await asyncio.gather(
+#         search_with_timeout("python"),
+#         search_with_timeout("慢请求"),
+#         search_with_timeout("Agent"),
+#         return_exceptions=True
+#     )
+#     for res in result:
+#         print(f"执行结果：{res}")
+#     print("并发总共耗时：", time.perf_counter() - start)
+
 async def main():
+
+    requests=["python","java","cpp","go","ruby"]
     start = time.perf_counter()
 
-    #定义带超时控制的包装函数
-    async def search_with_timeout(msg):
-        try :
-            # 设置2秒超时
-            return await asyncio.wait_for(search(msg), timeout=2)
-        except asyncio.TimeoutError:
-            return {
-        "status": "timeout",
-        "message": f"请求 {msg} 超过 2 秒",
-    }
+    tasks = [search(f"{x}")for x in requests]
+    results = await asyncio.gather(*tasks, return_exceptions=True)
 
-    result = await asyncio.gather(
-        search_with_timeout("python"),
-        search_with_timeout("慢请求"),
-        search_with_timeout("Agent"),
-        return_exceptions=True
-    )
-    for res in result:
-        print(f"执行结果：{res}")
-    print("并发总共耗时：", time.perf_counter() - start)
+    for result in results:
+        print(result)
 
+    print("并发总耗时：", time.perf_counter() - start)
 if __name__ == "__main__":
     asyncio.run(main())
 
