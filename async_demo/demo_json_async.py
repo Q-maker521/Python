@@ -28,29 +28,30 @@ async def handle_request(request_json):
     try:
         request = json.loads(request_json)
         if not isinstance(request, dict):
-            return "请求必须是字典"
+            return {"status": "error", "message": "请求必须是字典"}
         name = request.get("name")
         arguments = request.get("arguments")
         if not isinstance(name, str) or not name.strip():
-            return "工具名称必须是非空字符串"
+            return {"status": "error", "message": "工具名称必须是非空字符串"}
         if not isinstance(arguments, dict):
-            return "参数必须是字典"
+            return {"status": "error", "message": "参数必须是字典"}
         # 关键改动：加了 await
         return await function_call(name,arguments)
     except json.decoder.JSONDecodeError:
-        return "错误：json格式不正确"
+        return {"status": "error", "message": "JSON格式不正确"}
     except Exception as e:
-        return f"发生未知错误：{e}"
+        return {"status": "error", "message": f"发生未知错误：{e}"}
 
-#设置超时函数
-async def handle_request_with_timeout(request_json):
-    try:
-        return await asyncio.wait_for(handle_request(request_json),timeout=2)
-    except asyncio.TimeoutError:
-        return {
-            "status": "timeout",
-            "message": "请求执行过程超过两秒",
-        }
+#设置超时函数，加入并发限制
+async def handle_request_with_timeout(request_json,semaphore):
+    async with semaphore:
+        try:
+            return await asyncio.wait_for(handle_request(request_json), timeout=2)
+        except asyncio.TimeoutError:
+            return {
+                "status": "timeout",
+                "message": "请求执行过程超过两秒",
+            }
 
 def  mock_model(user_input):
     if user_input.startswith("搜索"):
@@ -90,17 +91,17 @@ async  def main():
     #     print(result)
     # print("并发总耗时：", time.perf_counter() - start)
 
-
     requests = [
         json.dumps({
             "name": "search",
             "arguments": {"message": keyword}
         }, ensure_ascii=False)
-        for keyword in ["Python", "慢请求", "Agent"]
+        for keyword in ["慢请求", "Python", "Java", "Go", "Ruby"]
     ]
+    semaphore = asyncio.Semaphore(2)
     start = time.perf_counter()
     results = await asyncio.gather(
-        *(handle_request_with_timeout(request) for request in requests)
+        *(handle_request_with_timeout(request,semaphore) for request in requests)
     )
 
     for result in results:
@@ -109,7 +110,7 @@ async  def main():
     print("开发总耗时：",time.perf_counter() - start)
 
 
-    # #失败测试：gather组中默认设置一旦有一个异常，终止
+    #  gather 默认向调用方传播异常，不会因此自动取消其他任务。
     # start = time.perf_counter()
     # results = await asyncio.gather(
     #     search("Python"),

@@ -10,7 +10,6 @@ semaphore = asyncio.Semaphore(2)
 @my_logger
 @my_timer
 async def search(message):
-    async with semaphore:
         if message == "失败测试":
             raise ValueError("模拟搜索失败")
 
@@ -43,42 +42,49 @@ async def function_call(name,keywords=None):
     except TypeError as e:
         return  f"error parameters:{e}"
 
-# async def main():
-#     start = time.perf_counter()
-#
-#     #定义带超时控制的包装函数
-#     async def search_with_timeout(msg):
-#         try :
-#             # 设置2秒超时
-#             return await asyncio.wait_for(search(msg), timeout=2)
-#         except asyncio.TimeoutError:
-#             return {
-#         "status": "timeout",
-#         "message": f"请求 {msg} 超过 2 秒",
-#     }
-#
-#     result = await asyncio.gather(
-#         search_with_timeout("python"),
-#         search_with_timeout("慢请求"),
-#         search_with_timeout("Agent"),
-#         return_exceptions=True
-#     )
-#     for res in result:
-#         print(f"执行结果：{res}")
-#     print("并发总共耗时：", time.perf_counter() - start)
 
+#定义带超时控制的包装函数
+async def search_with_timeout(msg):
+    try :
+        # 设置2秒超时
+        return await asyncio.wait_for(search(msg), timeout=2)
+    except asyncio.TimeoutError:
+        return {
+            "status": "timeout",
+            "message": f"请求 {msg} 超过 2 秒",
+        }
 async def main():
-
-    requests=["python","java","cpp","go","ruby"]
     start = time.perf_counter()
 
-    tasks = [search(f"{x}")for x in requests]
-    results = await asyncio.gather(*tasks, return_exceptions=True)
 
-    for result in results:
-        print(result)
 
-    print("并发总耗时：", time.perf_counter() - start)
+    result = await asyncio.gather(
+        search_with_timeout("python"),
+        search_with_timeout("慢请求"),
+        search_with_timeout("Agent"),
+        return_exceptions=True
+    )
+    for res in result:
+        print(f"执行结果：{res}")
+    print("并发总共耗时：", time.perf_counter() - start)
+
+
+#限制并发数为2
+# async def main():
+#
+#     requests=["python","java","cpp","go","ruby"]
+#     start = time.perf_counter()
+#
+#     tasks = [search(f"{x}")for x in requests]
+#     results = await asyncio.gather(*tasks, return_exceptions=True)
+#
+#     for result in results:
+#         print(result)
+#
+#     print("并发总耗时：", time.perf_counter() - start)
+
+
+
 if __name__ == "__main__":
     asyncio.run(main())
 

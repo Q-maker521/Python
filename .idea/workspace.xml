@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发">
+    <list default="true" id="d80ecbba-ce48-4d58-9327-542e48109472" name="更改" comment="实现限制并发,并发量设置为2：下一步：并发限制与超时组合">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app.log" beforeDir="false" afterPath="$PROJECT_DIR$/app.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" beforeDir="false" afterPath="$PROJECT_DIR$/async_demo/demo_function_call_async.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/async_demo/demo_json_async.py" beforeDir="false" afterPath="$PROJECT_DIR$/async_demo/demo_json_async.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -200,7 +201,15 @@
       <option name="project" value="LOCAL" />
       <updated>1794045620339</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="实现限制并发,并发量设置为2：下一步：并发限制与超时组合">
+      <option name="closed" value="true" />
+      <created>1794047209136</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1794047209136</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,6 +244,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="学习dector装饰器，实践并完成mytimmer以及mylogger模块，将其添加至工具函数中并处理异常" />
     <MESSAGE value="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发" />
-    <option name="LAST_COMMIT_MESSAGE" value="完成异步基础代码改造，实现工具函数并发调用及超时函数，下一步：实现限制并发" />
+    <MESSAGE value="实现限制并发,并发量设置为2：下一步：并发限制与超时组合" />
+    <option name="LAST_COMMIT_MESSAGE" value="实现限制并发,并发量设置为2：下一步：并发限制与超时组合" />
   </component>
 </project>
