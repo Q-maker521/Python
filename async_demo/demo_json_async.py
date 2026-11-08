@@ -73,58 +73,60 @@ requests1 = [
     }, ensure_ascii=False)
     for keyword in ["Python", "FastAPI", "Agent"]
 ]
-async  def main():
+# async  def main():
 
-    #在 for 循环中逐个等待请求完成，所以这三个请求串行执行。 等待期间，事件循环仍可运行其他已调度的任务。
-    # start = time.perf_counter()
-    # for request in requests:
-    #     result = await handle_request(request)
-    #     print(result)
-    # print("串行总耗时：", time.perf_counter() - start)
+#     #在 for 循环中逐个等待请求完成，所以这三个请求串行执行。 等待期间，事件循环仍可运行其他已调度的任务。
+#     # start = time.perf_counter()
+#     # for request in requests:
+#     #     result = await handle_request(request)
+#     #     print(result)
+#     # print("串行总耗时：", time.perf_counter() - start)
 
-    # start = time.perf_counter()
-    # # asyncio.gather会一次性把这三个handle_request协程任务同时提交给事件循环
-    # results = await asyncio.gather(
-    #     *(handle_request(request) for request in requests)
-    # )
-    # for result in results:
-    #     print(result)
-    # print("并发总耗时：", time.perf_counter() - start)
+#     # start = time.perf_counter()
+#     # # asyncio.gather会一次性把这三个handle_request协程任务同时提交给事件循环
+#     # results = await asyncio.gather(
+#     #     *(handle_request(request) for request in requests)
+#     # )
+#     # for result in results:
+#     #     print(result)
+#     # print("并发总耗时：", time.perf_counter() - start)
 
-    requests = [
-        json.dumps({
-            "name": "search",
-            "arguments": {"message": keyword}
-        }, ensure_ascii=False)
-        for keyword in ["慢请求", "Python", "Java", "Go", "Ruby"]
-    ]
-    semaphore = asyncio.Semaphore(2)
-    start = time.perf_counter()
-    results = await asyncio.gather(
-        *(handle_request_with_timeout(request,semaphore) for request in requests)
-    )
+    # requests = [
+    # #     json.dumps({
+    # #         "name": "search",
+    # #         "arguments": {"message": keyword}
+    # #     }, ensure_ascii=False)
+    # #     for keyword in ["慢请求", "Python", "Java", "Go", "Ruby"]
+    # ]
+#     semaphore = asyncio.Semaphore(2)
+#     start = time.perf_counter()
+#     results = await asyncio.gather(
+#         *(handle_request_with_timeout(request,semaphore) for request in requests)
+#     )
 
-    for result in results:
-        print("执行结果", result)
+#     for result in results:
+#         print("执行结果", result)
 
-    print("开发总耗时：",time.perf_counter() - start)
-
-
-    #  gather 默认向调用方传播异常，不会因此自动取消其他任务。
-    # start = time.perf_counter()
-    # results = await asyncio.gather(
-    #     search("Python"),
-    #     search("失败测试"),
-    #     search("Agent"),return_exceptions=True#开启后除指定模拟失败外，其余两个搜索均成功执行
-    # # return_exceptions=True  # 先不开启，测试默认行为
-    # )
-    # for res in results:
-    #     print(f"{res}")
-    # print("并发总耗时:", time.perf_counter() - start)
-
-asyncio.run(main())
+#     print("开发总耗时：",time.perf_counter() - start)
 
 
+#     #  gather 默认向调用方传播异常，不会因此自动取消其他任务。
+#     # start = time.perf_counter()
+#     # results = await asyncio.gather(
+#     #     search("Python"),
+#     #     search("失败测试"),
+#     #     search("Agent"),return_exceptions=True#开启后除指定模拟失败外，其余两个搜索均成功执行
+#     # # return_exceptions=True  # 先不开启，测试默认行为
+#     # )
+#     # for res in results:
+#     #     print(f"{res}")
+#     # print("并发总耗时:", time.perf_counter() - start)
+
+# asyncio.run(main())
+
+
+# if __name__ == "__main__":
+#     asyncio.run(main())
 # start = time.perf_counter()
 # for request in requests:
 #     result = await handle_request(request)
