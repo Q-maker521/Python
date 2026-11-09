@@ -1,4 +1,5 @@
 import asyncio
+import inspect
 import time
 from async_demo.demo_dectorater_async import *
 #工具调用模拟器：函数，一个列表，列表里面是函数名和需要的参数
@@ -35,12 +36,28 @@ tools={
 async def function_call(name,keywords=None):
     if keywords is None:
         keywords={}
+
+    #细化返回参数处理
     if name not in tools:
-        raise ValueError(f"错误，未知工具名称'{name}")
+         return {
+            "status": "error",
+            "code": "unknown_tool",
+            "message": f"未知工具：{name}",
+        }
+
+    tool = tools[name]
+
+    # 只检查参数是否能匹配函数签名
     try:
-        return await tools[name](**keywords)
+        inspect.signature(tool).bind(**keywords)
     except TypeError as e:
-        return  f"error parameters:{e}"
+       return {
+            "status": "error",
+            "code": "invalid_arguments",
+            "message": str(e),
+    }
+
+    return await tool(**keywords)
 
 
 #定义带超时控制的包装函数

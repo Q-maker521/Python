@@ -40,7 +40,11 @@ async def handle_request(request_json):
     except json.decoder.JSONDecodeError:
         return {"status": "error", "message": "JSON格式不正确"}
     except Exception as e:
-        return {"status": "error", "message": f"发生未知错误：{e}"}
+         return {
+        "status": "error",
+        "code": "execution_error",
+        "message": f"工具执行失败：{e}",
+    }
 
 #设置超时函数，加入并发限制
 async def handle_request_with_timeout(request_json,semaphore):

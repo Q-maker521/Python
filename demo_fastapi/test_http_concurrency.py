@@ -1,5 +1,4 @@
 import asyncio
-import json
 import httpx
 import time
 
@@ -8,25 +7,37 @@ async def main():
     keywords = ["Python", "FastAPI", "Agent","慢请求","rust"]
 
     async with httpx.AsyncClient(timeout=15.0) as client:
-        start = time.perf_counter()
 
-        responses = await asyncio.gather(
-            *(
+        start_time = time.perf_counter()
+        #并发执行多个请求
+        responses= await asyncio.gather(
+
+
+            *[
                 client.post(
-                    "http://localhost:8000/tools/execute_with_timeout",
-                    json={
-                        "name": "search",
-                        "arguments": {"message": keyword},
-                    },
+                    "http://127.0.0.1:8000/tools/execute_with_timeout",
+                    json={"name": "search", "arguments": {"message": keyword}},
                 )
                 for keyword in keywords
-            )
+            ]
         )
+    elapsed = time.perf_counter() - start_time
 
-        for keyword,response in zip(keywords,responses):
-            print(keyword,response.status_code,response.json())
+    for keyword, response in zip(keywords, responses):
+        body = response.json()
 
-        print("并发总耗时：", time.perf_counter() - start)
+        if keyword == "慢请求":
+            assert response.status_code == 504, response.text
+            assert "超过两秒" in body["detail"]
+        else:
+            assert response.status_code == 200, response.text
+            assert body["status"] == "success"
+            assert body["data"] == f"搜索：{keyword}"
+
+        print(keyword, response.status_code, body)
+
+    print(f"并发总耗时：{elapsed:.3f} 秒")
+    print("并发测试通过")
 
 
 if __name__ == "__main__":
