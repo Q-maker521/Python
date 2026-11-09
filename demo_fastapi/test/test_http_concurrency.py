@@ -3,24 +3,25 @@ import httpx
 import time
 
 
-async def main():
+
+
+async def  test_execute_with_timeout_concurrency(client):
     keywords = ["Python", "FastAPI", "Agent","慢请求","rust"]
 
-    async with httpx.AsyncClient(timeout=15.0) as client:
+    
 
-        start_time = time.perf_counter()
+    start_time = time.perf_counter()
         #并发执行多个请求
-        responses= await asyncio.gather(
+    responses= await asyncio.gather(
+        *[
+            client.post(
+                "/tools/execute_with_timeout",
+                json={"name": "search", "arguments": {"message": keyword}},
+            )
+            for keyword in keywords
+        ]
+    )
 
-
-            *[
-                client.post(
-                    "http://127.0.0.1:8000/tools/execute_with_timeout",
-                    json={"name": "search", "arguments": {"message": keyword}},
-                )
-                for keyword in keywords
-            ]
-        )
     elapsed = time.perf_counter() - start_time
 
     for keyword, response in zip(keywords, responses):
@@ -40,5 +41,5 @@ async def main():
     print("并发测试通过")
 
 
-if __name__ == "__main__":
-    asyncio.run(main())
+
+
