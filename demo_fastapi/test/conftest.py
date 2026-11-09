@@ -1,10 +1,14 @@
 import pytest
-import httpx
+from httpx import ASGITransport, AsyncClient
+from demo_fastapi.main import app
 
 @pytest.fixture
 async def client():
-    # 准备资源：创建异步 HTTP 客户端
-    async with httpx.AsyncClient(timeout=15.0, base_url="http://127.0.0.1:8000") as client:
-        # 提供给测试：将客户端实例注入测试函数
+
+    # 使用 ASGITransport 将请求直接转发给 FastAPI 应用
+    transport = ASGITransport(app=app)
+    
+    #base_url 是必须的（即使不走真实网络），httpx 需要它来构建绝对 URL
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
         yield client
     # 清理资源：上下文退出时自动关闭客户端连接 
