@@ -1,11 +1,12 @@
 import asyncio
 import httpx
+import pytest
 import time
 
 
 
-
-async def  test_execute_with_timeout_concurrency(client):
+@pytest.mark.parametrize("round_id", [1, 2])
+async def  test_execute_with_timeout_concurrency(client, round_id):
     keywords = ["Python", "FastAPI", "Agent","慢请求","rust"]
 
     
@@ -39,7 +40,3 @@ async def  test_execute_with_timeout_concurrency(client):
 
     print(f"并发总耗时：{elapsed:.3f} 秒")
     print("并发测试通过")
-
-
-
-
