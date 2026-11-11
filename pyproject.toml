@@ -10,7 +10,8 @@ dependencies = [
     "pytest>=9.2.0",
     "pytest-asyncio>=1.4.1.post1",
     "asyncpg",
-    "sqlalchemy[asyncio]"
+    "sqlalchemy[asyncio]",
+    "python-dotenv>=1.2.4",
 ]
 
 [dependency-groups]

@@ -1,9 +1,16 @@
 import asyncio
 import json
+import os
+
+from pathlib import Path
 from typing import Any, Literal
-# from asyncpg import Pool, create_pool  # 导入 asyncpg
+from dotenv import load_dotenv
+
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
+from contextlib import asynccontextmanager
+from sqlalchemy import text
+from sqlalchemy.ext.asyncio import create_async_engine
 
 from async_demo.demo_json_async import function_call
 from async_demo.demo_json_async import handle_request_with_timeout
@@ -23,47 +30,140 @@ class ToolPreviewResponse(BaseModel):
     arguments: dict[str, Any]
 
 
+class PostCreate(BaseModel):
+    title: str = Field(min_length=1)
+    content: str = Field(min_length=1)
+    published: bool = False 
 
-def create_app():
-    app = FastAPI()
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # 服务启动时执行
+    env_path = Path(__file__).resolve().parent.parent / ".env"
+    load_dotenv(env_path)
+
+    database_url = app.state.database_url
+    if database_url is None:
+        database_url = os.getenv("DATABASE_URL")
+    if not database_url:
+        raise ValueError("未配置数据库连接地址，请检查 DATABASE_URL")
+
+    engine = create_async_engine(database_url)
+
+    try:
+        # 启动时验证连接，失败则不继续启动服务
+        async with engine.connect() as connection:
+            await connection.execute(text("SELECT 1"))
+
+        # 保存到当前应用，供接口使用
+        app.state.db_engine = engine
+
+        yield  # 服务在这里运行、接收请求
+
+    finally:
+        # 服务关闭时释放数据库连接池
+        await engine.dispose()
+
+
+
+def create_app(database_url: str | None = None):
+    app = FastAPI(lifespan=lifespan)
+    app.state.database_url = database_url
     tool_semaphore = asyncio.Semaphore(2)
-# # 创建一个连接池变量
-# pool: Pool = None
 
-# @app.on_event("startup")
-# async def startup():
-#     global pool
-#     # 根据你的 DataGrip 配置(dbname=fastapi, user=postgres)初始化连接池
-#     pool = await create_pool(
-#         database="fastapi",
-#         user="postgres",
-#         password="你的数据库密码",
-#         host="localhost"
-#     )
+    @app.get("/posts")
+    async def get_posts():
+        async with app.state.db_engine.connect() as connection:
+            result = await connection.execute(
+                text("""
+                    SELECT id, title, content, published, created_at
+                    FROM posts
+                    ORDER BY id
+                """)
+            )
 
-# @app.on_event("shutdown")
-# async def shutdown():
-#     # 关闭连接池
-#     await pool.close()
+            posts = [dict(row) for row in result.mappings().all()]
 
-# @app.get("/")
-# async def health():
-#     return {"message": "Health check passed"}
+        return {"data": posts}
 
-# # 新增：测试数据库连接的接口
-# @app.get("/test-db")
-# async def test_db():
-#     if not pool:
-#         return {"status": "error", "message": "数据库连接池未初始化"}
+    @app.get("/posts/{post_id}")
+    async def get_post(post_id: int):
+        async with app.state.db_engine.connect() as connection:
+            result = await connection.execute(
+                text("""
+                    SELECT id, title, content, published, created_at
+                    FROM posts
+                    WHERE id = :post_id
+                """),
+                {"post_id": post_id},
+            )
 
-#     async with pool.acquire() as conn:
-#         # 查询你之前在 DataGrip 中创建的 products 表
-#         rows = await conn.fetch("SELECT name, price FROM products LIMIT 5")
+            post = result.mappings().first()
 
-#     return {"status": "success", "data": [dict(row) for row in rows]}
+        if post is None:
+            raise HTTPException(status_code=404, detail="Post not found")
+
+        return {"data": dict(post)}
 
 
+    @app.post("/posts", status_code=201)
+    async def create_post(post: PostCreate):
+        async with app.state.db_engine.begin() as connection:
+            result = await connection.execute(
+                text("""
+                    INSERT INTO posts (title, content, published)
+                    VALUES (:title, :content, :published)
+                    RETURNING id, title, content, published, created_at
+                """),
+                post.model_dump(),
+            )
+            created_post = dict(result.mappings().one())
 
+        return {"data": created_post}
+
+    @app.put("/posts/{post_id}")
+    async def update_post(post_id: int, post: PostCreate):
+        async with app.state.db_engine.begin() as connection:
+            result = await connection.execute(
+                text("""
+                    UPDATE posts
+                    SET title = :title,
+                        content = :content,
+                        published = :published
+                    WHERE id = :post_id
+                    RETURNING id, title, content, published, created_at
+                """),
+                {
+                    **post.model_dump(), 
+                    "post_id": post_id
+                },
+            )
+            updated_post = result.mappings().first()
+            if updated_post is None:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Post not found",
+                )
+        
+        return {"data": dict(updated_post)}
+
+
+    @app.delete("/posts/{post_id}", status_code=204)
+    async def delete_post(post_id: int):
+        async with app.state.db_engine.begin() as connection:
+            result = await connection.execute(
+                text("""
+                    DELETE FROM posts
+                    WHERE id = :post_id
+                """),
+                {"post_id": post_id},
+            )
+            if result.rowcount == 0:
+                raise HTTPException(
+                    status_code=404,
+                    detail="Post not found",
+                )
+        
 
 
 
@@ -117,6 +217,5 @@ def create_app():
             )
         return result
     return app
-
 
 app = create_app()
