@@ -24,3 +24,9 @@ venv/
 # 操作系统垃圾文件
 .DS_Store
 Thumbs.db
+
+# Local database backups and one-off maintenance scripts
+sql_compare/
+db_ops/
+.pytest_cache/
+.vscode/
