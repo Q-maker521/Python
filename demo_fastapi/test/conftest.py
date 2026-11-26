@@ -1,6 +1,6 @@
 import os
-from uuid import uuid4
 from pathlib import Path
+from uuid import uuid4
 
 import pytest
 from dotenv import load_dotenv
@@ -11,39 +11,42 @@ from demo_fastapi.main import create_app
 
 
 @pytest.fixture
-async def client():
-    # conftest.py 位于 demo_fastapi/test/，所以向上两级到项目根目录
+async def app():
     env_path = Path(__file__).resolve().parents[2] / ".env"
     load_dotenv(env_path)
 
     database_url = os.getenv("TEST_DATABASE_URL")
     if not database_url:
-        raise ValueError("未找到 TEST_DATABASE_URL 环境变量")
+        raise ValueError("未配置 TEST_DATABASE_URL")
 
-    # 避免误连日常使用的数据库
     if make_url(database_url).database != "fastapi_test":
         raise ValueError("测试必须使用 fastapi_test 数据库")
 
-    app = create_app(database_url=database_url)
+    application = create_app(database_url=database_url)
 
-    # 进入时执行 lifespan 中 yield 前的初始化
-    # 退出时执行 finally，释放数据库连接池
-    async with app.router.lifespan_context(app):
-        transport = ASGITransport(app=app)
+    async with application.router.lifespan_context(application):
+        yield application
 
-        async with AsyncClient(
-            transport=transport,
-            base_url="http://test",
-        ) as http_client:
-            yield http_client
 
+@pytest.fixture
+async def client(app):
+    async with AsyncClient(
+        transport=ASGITransport(app=app),
+        base_url="http://test",
+    ) as http_client:
+        yield http_client
+
+
+@pytest.fixture
+def db_engine(app):
+    return app.state.db_engine
 
 @pytest.fixture(scope="function")
 async def test_user(client):
     """管理测试用户的生命周期"""
     # 1. 创建用户
     token = uuid4().hex
-    payload = {"username": f"test_{token}", "email": f"{token}@example.com"}
+    payload = {"username": f"test_{token}", "email": f"{token}@example.com", "password": "password123"}
     res = await client.post("/users/register", json=payload)
     # 建议断言注册成功(状态码已改为201)
     assert res.status_code == 201, res.text

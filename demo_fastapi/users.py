@@ -1,24 +1,36 @@
+import asyncio
+
 from fastapi import APIRouter, HTTPException, Request
+from pwdlib import PasswordHash
 from sqlalchemy import text
 from sqlalchemy.exc import IntegrityError
 
-from demo_fastapi.schemas import UserCreate
+from demo_fastapi.schemas import UserCreate, UserDataResponse, UserLogin
 
 router = APIRouter(tags=["users"])
+password_hasher = PasswordHash.recommended()
 
-@router.post("/register", status_code=201)
+@router.post("/register", status_code=201, response_model=UserDataResponse)
 async def register_user(request: Request, user: UserCreate):
     try:
+
+        hashed_password = await asyncio.to_thread(password_hasher.hash, user.password)
+
         async with request.app.state.db_engine.begin() as connection:
 
             result = await connection.execute(
                 text("""
-                    INSERT INTO users (username, email)
-                    VALUES (:username, :email)
-                    RETURNING id, username, email
+                    INSERT INTO users (username, email, password_hash)
+                    VALUES (:username, :email, :password_hash)
+                    RETURNING id, username, email, created_at
                 """     ),
-                user.model_dump(),
+                 {
+                    "username": user.username,
+                    "email": user.email,
+                    "password_hash": hashed_password
+                }
             )
+
             created_user = dict(result.mappings().one())
     except IntegrityError as exc:
         # 检查错误信息是否是邮箱或用户名重复
@@ -26,23 +38,40 @@ async def register_user(request: Request, user: UserCreate):
             raise HTTPException(status_code=409, detail="邮箱或用户名已存在")
         raise
     return {"data": created_user}
-@router.post("/login")
-async def login_user(request: Request,username:str,email:str):
-    async with request.app.state.db_engine.begin() as connection:
+@router.post("/login",status_code=200, response_model=UserDataResponse)
+async def login_user(request: Request, login: UserLogin):
+    async with request.app.state.db_engine.connect() as connection:
         result = await connection.execute(
             text("""
-                SELECT id, username, email
+                SELECT id, username, email, created_at, password_hash, disabled
                 FROM users
-                WHERE username = :username AND email = :email
+                WHERE email = :email
             """),
-            {"username": username, "email": email},
+            {"email": login.email},
         )
         user = result.mappings().first()
-        if not user:
-            raise HTTPException(status_code=401, detail="Invalid username or email")
-        user = dict(user)
+    if user is None or not user["password_hash"]:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
 
-    return {"data": user}
+    verified = await asyncio.to_thread(
+        password_hasher.verify,
+        login.password,
+        user["password_hash"],
+        )
+    if not verified:
+        raise HTTPException(status_code=401, detail="Invalid email or password")
+    if user["disabled"]:
+        raise HTTPException(status_code=403, detail="user is disabled")
+
+    return {
+        "data": {
+        "id": user["id"],
+        "username": user["username"],
+        "email": user["email"],
+        "created_at": user["created_at"],
+        }
+    }
+
 @router.delete("/{user_id}", status_code=204)
 async def delete_user(request: Request, user_id: int):
     async with request.app.state.db_engine.begin() as connection:

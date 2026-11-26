@@ -1,6 +1,7 @@
+from datetime import datetime
 from typing import Any, Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, EmailStr, Field
 
 
 # 客户端需要传入参数
@@ -28,4 +29,18 @@ class PostUpdate(BaseModel):
 
 class UserCreate(BaseModel):
     username: str = Field(min_length=1)
-    email: str = Field(min_length=1)
+    email: EmailStr
+    password: str = Field(min_length=6, max_length=20)
+
+class UserResponse(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+    created_at: datetime
+
+class UserDataResponse(BaseModel):
+    data: UserResponse
+
+class UserLogin(BaseModel):
+    email: EmailStr
+    password: str

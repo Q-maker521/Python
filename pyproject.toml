@@ -12,6 +12,7 @@ dependencies = [
     "asyncpg",
     "sqlalchemy[asyncio]",
     "python-dotenv>=1.2.4",
+    "pwdlib[argon2]>=0.4.2",
 ]
 
 [dependency-groups]
